@@ -22,10 +22,9 @@ class AdminDashboard extends Component
     public $stats = [];
 
     public $categories = [];
-    
-    public $suspendingAuctionId = null;
-public $suspensionReason = '';
 
+    public $suspendingAuctionId = null;
+    public $suspensionReason = '';
 
     public function mount()
     {
@@ -66,11 +65,26 @@ public $suspensionReason = '';
     }
 
     // User Management
-    public function deleteUser($id)
+    public function suspendUser($id)
     {
-        User::findOrFail($id)->delete();
+        if (auth()->id() === (int) $id) {
+            session()->flash('message', 'You cannot suspend your own account.');
+            return;
+        }
+
+        $user = User::findOrFail($id);
+
+        // Updates status if column exists, otherwise soft deletes or adjusts based on your schema
+        if (\Schema::hasColumn('users', 'status')) {
+            $user->update(['status' => 'suspended']);
+        } elseif (\Schema::hasColumn('users', 'is_suspended')) {
+            $user->update(['is_suspended' => true]);
+        } else {
+            $user->delete();
+        }
+
         $this->loadStats();
-        session()->flash('message', 'User deleted successfully.');
+        session()->flash('message', "User {$user->name} suspended successfully.");
     }
 
     public function changeRole($id, $newRole)
@@ -81,44 +95,36 @@ public $suspensionReason = '';
     }
 
     // Auction Moderation
+    public function updateAuctionStatus($id, $status)
+    {
+        if ($status === 'suspended') {
+            $this->suspendingAuctionId = $id;
+            return;
+        }
 
-public function updateAuctionStatus($id, $status)
-{
-    if ($status === 'suspended') {
-        $this->suspendingAuctionId = $id;
-        return;
+        $auction = Auction::findOrFail($id);
+        $auction->update(['status' => $status, 'suspension_reason' => null]);
+        $this->loadStats();
+        session()->flash('message', "Auction status updated to {$status}.");
     }
 
-    $auction = Auction::findOrFail($id);
-    $auction->update(['status' => $status, 'suspension_reason' => null]);
-    $this->loadStats();
-    session()->flash('message', "Auction status updated to {$status}.");
-}
-
-public function confirmSuspend()
-{
-    $auction = Auction::findOrFail($this->suspendingAuctionId);
-    $auction->update([
-        'status' => 'suspended',
-        'suspension_reason' => $this->suspensionReason ?: null,
-    ]);
-    $this->loadStats();
-    $this->suspendingAuctionId = null;
-    $this->suspensionReason = '';
-    session()->flash('message', 'Auction suspended.');
-}
-
-public function cancelSuspend()
-{
-    $this->suspendingAuctionId = null;
-    $this->suspensionReason = '';
-}
-
-    public function deleteAuction($id)
+    public function confirmSuspend()
     {
-        Auction::findOrFail($id)->delete();
+        $auction = Auction::findOrFail($this->suspendingAuctionId);
+        $auction->update([
+            'status' => 'suspended',
+            'suspension_reason' => $this->suspensionReason ?: null,
+        ]);
         $this->loadStats();
-        session()->flash('message', 'Auction deleted permanently.');
+        $this->suspendingAuctionId = null;
+        $this->suspensionReason = '';
+        session()->flash('message', 'Auction suspended.');
+    }
+
+    public function cancelSuspend()
+    {
+        $this->suspendingAuctionId = null;
+        $this->suspensionReason = '';
     }
 
     public function render()

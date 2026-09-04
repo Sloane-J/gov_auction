@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -19,7 +20,9 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property int $id
  * @property string $name
  * @property string $email
+ * @property string $role
  * @property Carbon|null $email_verified_at
+ * @property Carbon|null $suspended_at
  * @property string $password
  * @property string|null $two_factor_secret
  * @property string|null $two_factor_recovery_codes
@@ -28,7 +31,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['name', 'email', 'password', 'role'])]
+#[Fillable(['name', 'email', 'password', 'role', 'suspended_at'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable implements PasskeyUser
 {
@@ -44,8 +47,17 @@ class User extends Authenticatable implements PasskeyUser
     {
         return [
             'email_verified_at' => 'datetime',
+            'suspended_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Determine if the user account is currently suspended.
+     */
+    public function isSuspended(): bool
+    {
+        return ! is_null($this->suspended_at);
     }
 
     /**
@@ -60,22 +72,22 @@ class User extends Authenticatable implements PasskeyUser
             : $initials;
     }
 
-    public function auctions()
+    public function auctions(): HasMany
     {
         return $this->hasMany(Auction::class, 'created_by');
     }
 
-    public function bids()
+    public function bids(): HasMany
     {
         return $this->hasMany(Bid::class);
     }
 
-    public function watchlists()
+    public function watchlists(): HasMany
     {
         return $this->hasMany(Watchlist::class);
     }
 
-    public function payments()
+    public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
     }

@@ -27,46 +27,63 @@
 
 @if($activeTab === 'overview')
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900 p-4 shadow-sm">
-            <div class="flex items-center gap-4">
-                <div class="rounded-lg bg-blue-100 dark:bg-blue-900/40 p-3 text-blue-600 dark:text-blue-400">Users</div>
-                <div>
-                    <div class="text-sm text-zinc-500 dark:text-zinc-400">Total Users</div>
-                    <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ number_format($stats['total_users']) }}</div>
-                </div>
+    <div class="rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900 p-4 shadow-sm">
+        <div class="flex items-center gap-4">
+            <div class="rounded-lg bg-blue-100 dark:bg-blue-900/40 p-3 text-blue-600 dark:text-blue-400">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                </svg>
             </div>
-        </div>
-
-        <div class="rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900 p-4 shadow-sm">
-            <div class="flex items-center gap-4">
-                <div class="rounded-lg bg-indigo-100 dark:bg-indigo-900/40 p-3 text-indigo-600 dark:text-indigo-400">Auctions</div>
-                <div>
-                    <div class="text-sm text-zinc-500 dark:text-zinc-400">Total Auctions</div>
-                    <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ number_format($stats['total_auctions']) }}</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900 p-4 shadow-sm">
-            <div class="flex items-center gap-4">
-                <div class="rounded-lg bg-green-100 dark:bg-green-900/40 p-3 text-green-600 dark:text-green-400">Revenue</div>
-                <div>
-                    <div class="text-sm text-zinc-500 dark:text-zinc-400">Total Revenue</div>
-                    <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">${{ number_format($stats['total_revenue'], 2) }}</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900 p-4 shadow-sm">
-            <div class="flex items-center gap-4">
-                <div class="rounded-lg bg-orange-100 dark:bg-orange-900/40 p-3 text-orange-600 dark:text-orange-400">Bids</div>
-                <div>
-                    <div class="text-sm text-zinc-500 dark:text-zinc-400">Total Bids</div>
-                    <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ number_format($stats['total_bids']) }}</div>
-                </div>
+            <div>
+                <div class="text-sm text-zinc-500 dark:text-zinc-400">Total Users</div>
+                <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ number_format($stats['total_users']) }}</div>
             </div>
         </div>
     </div>
+
+    <div class="rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900 p-4 shadow-sm">
+        <div class="flex items-center gap-4">
+            <div class="rounded-lg bg-indigo-100 dark:bg-indigo-900/40 p-3 text-indigo-600 dark:text-indigo-400">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                </svg>
+            </div>
+            <div>
+                <div class="text-sm text-zinc-500 dark:text-zinc-400">Total Auctions</div>
+                <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ number_format($stats['total_auctions']) }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900 p-4 shadow-sm">
+        <div class="flex items-center gap-4">
+            <div class="rounded-lg bg-green-100 dark:bg-green-900/40 p-3 text-green-600 dark:text-green-400">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+            </div>
+            <div>
+                <div class="text-sm text-zinc-500 dark:text-zinc-400">Total Revenue</div>
+                <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">${{ number_format($stats['total_revenue'], 2) }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900 p-4 shadow-sm">
+        <div class="flex items-center gap-4">
+            <div class="rounded-lg bg-orange-100 dark:bg-orange-900/40 p-3 text-orange-600 dark:text-orange-400">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.25 10.5 3 3m0 0 3-3m-3 3V1.5" />
+                </svg>
+            </div>
+            <div>
+                <div class="text-sm text-zinc-500 dark:text-zinc-400">Total Bids</div>
+                <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ number_format($stats['total_bids']) }}</div>
+            </div>
+        </div>
+    </div>
+</div>
 @endif
 
 @if($activeTab === 'users')
@@ -97,7 +114,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">{{ $user->created_at->format('M d, Y') }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 @if(auth()->id() !== $user->id)
-                                    <button wire:click="deleteUser({{ $user->id }})" wire:confirm="Delete this user permanently?" class="text-red-600 dark:text-red-400 hover:text-red-800">Delete</button>
+                                    <button wire:click="suspendUser({{ $user->id }})" wire:confirm="Are you sure you want to suspend this user?" class="text-orange-600 dark:text-orange-400 hover:text-orange-800">Suspend</button>
                                 @endif
                             </td>
                         </tr>
@@ -144,7 +161,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">${{ number_format($auction->current_price ?: $auction->starting_price, 2) }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <button wire:click="deleteAuction({{ $auction->id }})" wire:confirm="Delete this auction permanently?" class="text-red-600 dark:text-red-400 hover:text-red-800 ml-4">Delete</button>
+                                <button wire:click="$set('suspendingAuctionId', {{ $auction->id }})" class="text-orange-600 dark:text-orange-400 hover:text-orange-800 ml-4">Suspend</button>
                             </td>
                         </tr>
                     @endforeach

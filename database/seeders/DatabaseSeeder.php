@@ -16,26 +16,51 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Default System Admin
+        User::firstOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Admin User',
+                'password' => Hash::make('password'),
+                'role' => 'admin',
+                'email_verified_at' => now(),
+            ]
+        );
 
-        User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'admin',
-        ]);
+        // Default Auction Officer
+        User::firstOrCreate(
+            ['email' => 'officer@example.com'],
+            [
+                'name' => 'Officer User',
+                'password' => Hash::make('password'),
+                'role' => 'officer',
+                'email_verified_at' => now(),
+            ]
+        );
 
-        User::factory()->create([
-            'name' => 'Officer User',
-            'email' => 'officer@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'officer',
-        ]);
+        // Fixed Bidders for Easy Testing
+        $fixedBidders = [
+            ['name' => 'Bidder User', 'email' => 'bidder@example.com'],
+            ['name' => 'Kwame Mensah', 'email' => 'kwame@example.com'],
+            ['name' => 'Abena Osei', 'email' => 'abena@example.com'],
+            ['name' => 'Kofi Boateng', 'email' => 'kofi@example.com'],
+            ['name' => 'Ama Appiah', 'email' => 'ama@example.com'],
+        ];
 
-        User::factory()->create([
-            'name' => 'Bidder User',
-            'email' => 'bidder@example.com',
-            'password' => Hash::make('password'),
+        foreach ($fixedBidders as $bidder) {
+            User::firstOrCreate(
+                ['email' => $bidder['email']],
+                [
+                    'name' => $bidder['name'],
+                    'password' => Hash::make('password'),
+                    'role' => 'bidder',
+                    'email_verified_at' => now(),
+                ]
+            );
+        }
+
+        // Additional Random Bidders via Factory
+        User::factory(10)->create([
             'role' => 'bidder',
         ]);
     }
